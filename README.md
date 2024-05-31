@@ -1,86 +1,478 @@
-# Template repo for Java SDK  
-This template helps developers get started with publishing the Java SDK to Maven Central package repository.
+# Celitech Java SDK 1.1.2
 
-## Prerequisites
-The user will need the following:
+A Java SDK for Celitech.
 
-- A [Maven Central](https://central.sonatype.org/) account and token credentials generated on the [Account](https://central.sonatype.com/account) page that allow uploading packages to the [Central Maven Repository](https://repo.maven.apache.org/maven2/)
-- Generated [GPG](https://central.sonatype.org/publish/requirements/gpg/#managing-your-credentials) key pair that is used for signing artifacts during the publishing process
+- API version: 1.1.0
+- SDK version: 1.1.2
 
-## Contents
-This repository contains the following:
+Welcome to the CELITECH API documentation! Useful links: [Homepage](https://www.celitech.com) | [Support email](mailto:support@celitech.com) | [Blog](https://www.celitech.com/blog/)
 
-- A `README` that contains the instructions
-- A GitHub Action workflow to publish the Java SDK to Maven Central package repository.
+## Table of Contents
 
+- [Installation](#installation)
+- [Environments](#environments)
 
-## Instructions
+## Installation
 
-1. Create a new target Java SDK Repo by clicking the __Use this template__ button at the top of this repository.
-1. Set `MAVEN_USERMANE` and `MAVEN_PASSWORD` action secrets in the target SDK repo with the values generated from the [Account](https://central.sonatype.com/account) page of the Maven Central Portal. (see [Appendix A](#appendix-a) for more information)
-1. Set `GPG_PRIVATE_KEY` and `GPG_PASSPHRASE` action secrets in the target SDK repo (see [Appendix B](#appendix-b) for detailed instructions)
-1. If you already have a Control Repo:
+If you use Maven, place the following within the _dependency_ tag in your pom.xml file:
 
-    1. Update your `LIBLAB_GITHUB_TOKEN` actions secret to a new token that has access to all your existing SDK repos, as well as this new one.
+```XML
+<dependency>
+  <groupId>net.celitech</groupId>
+  <artifactId>Celitech</artifactId>
+  <version>1.1.2</version>
+</dependency>
+```
 
-    1. Update your config file with the field values required for publishing:
+If you use Gradle, paste the next line inside the _dependencies_ block of your build.gradle file:
 
-        1. [`groupId`](https://developers.liblab.com/cli/config-file-overview-language/#groupid) with the value of your approved Central Repository namespace
-        2. [`githubRepoName`](https://developers.liblab.com/cli/config-file-overview-language/#githubreponame) with the name of the target SDK repo
-        3. [`homepage`](https://developers.liblab.com/cli/config-file-overview-language/#homepage) with the valid public URL of the SDK homepage
+```Gradle
+implementation group: net.celitech, name: Celitech, version: 1.1.2
+```
 
-1. Run the GitHub Action `Generate SDKs using liblab` in the Control Repo that builds the SDK, and raises a PR against this target SDK Repo. This will be triggered automatically when you commit and push the update to the liblab config file.
+## Environments
 
-1. Review and merge the PR.
+Here is the list of all available environment variables:
 
-1. Create a release in the target SDK Repo.
+```java
+DEFAULT("https://api.celitech.net/v1"),
+PRODUCTION("https://api.celitech.net/v1"),
+SANDBOX("https://1bki1q3be6.execute-api.us-east-1.amazonaws.com/qa");
+```
 
-1. The GitHub Action `Publish to Maven Central Repository` in the target SDK Repo will be triggered by the release, and deploy the package to Maven Central Repository. 
+Here is how you set an environment:
 
-1. Package will immediately appear on the [Deployments](https://central.sonatype.com/publishing/deployments) page under `PUBLISHING` status. After the validation process has been successfully finished, deployment will transition to `PUBLISHED` status, and the package will become available on [Maven Central Repository](https://central.sonatype.com/search). 
+```java
+import net.celitech.celitech.http.Environment;
 
+public class Main {
 
-## Appendix A - Central Portal Setup
+  public static void main(String[] args) {
+    CelitechConfig config = CelitechConfig.builder().build();
+    Celitech celitech = new Celitech(config);
 
-Publishing action automates publishing packages via the [Central Portal](https://central.sonatype.org/), which is, as of March 12th, 2024, the default publishing server for Maven packages. We do not support automatic publishing through the Legacy OSSRH.
+    celitech.setEnvironment(Environment.DEFAULT);
+  }
+}
 
-### Account Creation
+```
 
-The [Central Portal Account Documentation](https://central.sonatype.org/register/central-portal/) explains how to create an account that is required for claiming namespaces and managing package deployments.
+## Services
 
-### Namespace Registration
+A list of all SDK services. Click on the service name to access its corresponding service methods.
 
-Namespace is the crucial prerequisite for publishing a package to the Central Repository as it is the `groupId` of the package.  The [Central Portal Namespace Documentation](https://central.sonatype.org/register/namespace/#switching-to-ossrh-during-portal-early-access) provides detailed instructions for claiming a namespace. 
+| Service                                     |
+| :------------------------------------------ |
+| [DestinationsService](#destinationsservice) |
+| [PackagesService](#packagesservice)         |
+| [PurchasesService](#purchasesservice)       |
+| [ESimService](#esimservice)                 |
 
-One should note that the namespace verification process is not instant. For own domain namespaces (e.g. `com.liblab`), additional step is required from the user, which involves setting up the verification key as a DNS record in order for the domain name to be verified by the Central Repository. For GitHub namespaces (namespace in the form of `io.github.githuborgname`), though, verification process is automatic if the user is registered using the GitHub SSO.   
+### DestinationsService
 
+A list of all methods in the `DestinationsService` service. Click on the method name to view detailed information about that method.
 
-### Generating Maven Credentials
+| Methods                               | Description              |
+| :------------------------------------ | :----------------------- |
+| [listDestinations](#listdestinations) | Name of the destinations |
 
-Credentials for `MAVEN_USERNAME` and `MAVEN_PASSWORD` action secrets can be generated from the [Account](https://central.sonatype.com/account/) page.
+#### **listDestinations**
 
+Name of the destinations
 
-## Appendix B - GPG Key and Passphrase
+- HTTP Method: `GET`
+- Endpoint: `/destinations`
 
-The Central Repository requires all artifacts to be signed with GPG. This section explains how to generate your own key pair, distribute it to the key server and obtain the private key.
+**Parameters**
 
-1. Install [GnuPG](https://www.gnupg.org/download/)\
-    (available through `brew install gnupg`)
+| Name | Type | Required | Description |
+| :--- | :--- | :------: | :---------- |
 
-1. Initialize the key generation prompt by running:\
-    `gpg --gen-key`
+```java
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.destinations.ListDestinationsOkResponse;
 
-1. Input all necessary data and choose the passphrase
+class Main {
 
-1. Copy the key id - 40 character long value printed out in the second row by the command:\
-    `gpg --list-secret-keys`
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
 
-1. Send the key to the key server (in our case `openpgp`) by running:\
-    `gpg --keyserver keys.openpgp.org --send-keys ${key-id}`
+    ListDestinationsOkResponse response = celitech.destinationsService.listDestinations();
 
-1. Export the private key to the file by running:\
-    `gpg --export-secret-keys ${key-id} --armour > key.asc`
+    System.out.println(response);
+  }
+}
 
-1. Copy the contents of the `key.asc` file and paste it in the `GPG_PRIVATE_KEY` action secret
+```
 
-1. Add chosen passphrase to the `GPG_PASSPHRASE` action secret
+### PackagesService
+
+A list of all methods in the `PackagesService` service. Click on the method name to view detailed information about that method.
+
+| Methods                       | Description                |
+| :---------------------------- | :------------------------- |
+| [listPackages](#listpackages) | List of available packages |
+
+#### **listPackages**
+
+List of available packages
+
+- HTTP Method: `GET`
+- Endpoint: `/packages`
+
+**Parameters**
+
+| Name              | Type                   | Required | Description               |
+| :---------------- | :--------------------- | :------: | :------------------------ |
+| requestParameters | ListPackagesParameters |    ❌    | Request Parameters Object |
+
+```java
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.packages.ListPackagesOkResponse;
+import net.celitech.celitech.services.packages.ListPackagesParameters;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    ListPackagesOkResponse response = celitech.packagesService.listPackages();
+
+    System.out.println(response);
+  }
+}
+
+```
+
+### PurchasesService
+
+A list of all methods in the `PurchasesService` service. Click on the method name to view detailed information about that method.
+
+| Methods                                           | Description                                                                                                                                                                                                                                                                                                            |
+| :------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [listPurchases](#listpurchases)                   | This endpoint can be used to list all the successful purchases made between a given interval.                                                                                                                                                                                                                          |
+| [createPurchase](#createpurchase)                 | This endpoint is used to purchase a new eSIM by providing the package details.                                                                                                                                                                                                                                         |
+| [topUpEsim](#topupesim)                           | This endpoint is used to top-up an eSIM with the previously associated destination by providing an existing ICCID and the package details. The top-up is not feasible for eSIMs in "DELETED" or "ERROR" state.                                                                                                         |
+| [editPurchase](#editpurchase)                     | This endpoint allows you to modify the dates of an existing package with a future activation start time. Editing can only be performed for packages that have not been activated, and it cannot change the package size. The modification must not change the package duration category to ensure pricing consistency. |
+| [getPurchaseConsumption](#getpurchaseconsumption) | This endpoint can be called for consumption notifications (e.g. every 1 hour or when the user clicks a button). It returns the data balance (consumption) of purchased packages.                                                                                                                                       |
+
+#### **listPurchases**
+
+This endpoint can be used to list all the successful purchases made between a given interval.
+
+- HTTP Method: `GET`
+- Endpoint: `/purchases`
+
+**Parameters**
+
+| Name              | Type                    | Required | Description               |
+| :---------------- | :---------------------- | :------: | :------------------------ |
+| requestParameters | ListPurchasesParameters |    ❌    | Request Parameters Object |
+
+```java
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.purchases.ListPurchasesOkResponse;
+import net.celitech.celitech.services.purchases.ListPurchasesParameters;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    ListPurchasesOkResponse response = celitech.purchasesService.listPurchases();
+
+    System.out.println(response);
+  }
+}
+
+```
+
+#### **createPurchase**
+
+This endpoint is used to purchase a new eSIM by providing the package details.
+
+- HTTP Method: `POST`
+- Endpoint: `/purchases`
+
+**Parameters**
+
+| Name                  | Type                  | Required | Description  |
+| :-------------------- | :-------------------- | :------: | :----------- |
+| createPurchaseRequest | CreatePurchaseRequest |    ✅    | Request Body |
+
+```java
+import lombok.NonNull;
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.purchases.CreatePurchaseOkResponse;
+import net.celitech.celitech.services.purchases.CreatePurchaseRequest;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    CreatePurchaseRequest createPurchaseRequest = CreatePurchaseRequest
+      .builder()
+      .destination("FRA")
+      .dataLimitInGb(1)
+      .startDate("2023-11-01")
+      .endDate("2023-11-20")
+      .build();
+
+    CreatePurchaseOkResponse response = celitech.purchasesService.createPurchase(createPurchaseRequest);
+
+    System.out.println(response);
+  }
+}
+
+```
+
+#### **topUpEsim**
+
+This endpoint is used to top-up an eSIM with the previously associated destination by providing an existing ICCID and the package details. The top-up is not feasible for eSIMs in "DELETED" or "ERROR" state.
+
+- HTTP Method: `POST`
+- Endpoint: `/purchases/topup`
+
+**Parameters**
+
+| Name             | Type             | Required | Description  |
+| :--------------- | :--------------- | :------: | :----------- |
+| topUpEsimRequest | TopUpEsimRequest |    ✅    | Request Body |
+
+```java
+import lombok.NonNull;
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.purchases.TopUpEsimOkResponse;
+import net.celitech.celitech.services.purchases.TopUpEsimRequest;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    TopUpEsimRequest topUpEsimRequest = TopUpEsimRequest
+      .builder()
+      .iccid("1111222233334444555")
+      .dataLimitInGb(1)
+      .startDate("2023-11-01")
+      .endDate("2023-11-20")
+      .build();
+
+    TopUpEsimOkResponse response = celitech.purchasesService.topUpEsim(topUpEsimRequest);
+
+    System.out.println(response);
+  }
+}
+
+```
+
+#### **editPurchase**
+
+This endpoint allows you to modify the dates of an existing package with a future activation start time. Editing can only be performed for packages that have not been activated, and it cannot change the package size. The modification must not change the package duration category to ensure pricing consistency.
+
+- HTTP Method: `POST`
+- Endpoint: `/purchases/edit`
+
+**Parameters**
+
+| Name                | Type                | Required | Description  |
+| :------------------ | :------------------ | :------: | :----------- |
+| editPurchaseRequest | EditPurchaseRequest |    ✅    | Request Body |
+
+```java
+import lombok.NonNull;
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.purchases.EditPurchaseOkResponse;
+import net.celitech.celitech.services.purchases.EditPurchaseRequest;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    EditPurchaseRequest editPurchaseRequest = EditPurchaseRequest
+      .builder()
+      .purchaseId("ae471106-c8b4-42cf-b83a-b061291f2922")
+      .startDate("2023-11-01")
+      .endDate("2023-11-20")
+      .build();
+
+    EditPurchaseOkResponse response = celitech.purchasesService.editPurchase(editPurchaseRequest);
+
+    System.out.println(response);
+  }
+}
+
+```
+
+#### **getPurchaseConsumption**
+
+This endpoint can be called for consumption notifications (e.g. every 1 hour or when the user clicks a button). It returns the data balance (consumption) of purchased packages.
+
+- HTTP Method: `GET`
+- Endpoint: `/purchases/{purchaseId}/consumption`
+
+**Parameters**
+
+| Name       | Type   | Required | Description        |
+| :--------- | :----- | :------: | :----------------- |
+| purchaseId | String |    ✅    | ID of the purchase |
+
+```java
+import lombok.NonNull;
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.purchases.GetPurchaseConsumptionOkResponse;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    GetPurchaseConsumptionOkResponse response = celitech.purchasesService.getPurchaseConsumption(
+      "4973fa15-6979-4daa-9cf3-672620df819c"
+    );
+
+    System.out.println(response);
+  }
+}
+
+```
+
+### ESimService
+
+A list of all methods in the `ESimService` service. Click on the method name to view detailed information about that method.
+
+| Methods                           | Description                            |
+| :-------------------------------- | :------------------------------------- |
+| [getEsim](#getesim)               | Get status from eSIM                   |
+| [getEsimDevice](#getesimdevice)   | Get device info from an installed eSIM |
+| [getEsimHistory](#getesimhistory) | Get history from an eSIM               |
+| [getEsimMac](#getesimmac)         | Get MAC from eSIM                      |
+
+#### **getEsim**
+
+Get status from eSIM
+
+- HTTP Method: `GET`
+- Endpoint: `/esim`
+
+**Parameters**
+
+| Name              | Type              | Required | Description               |
+| :---------------- | :---------------- | :------: | :------------------------ |
+| requestParameters | GetEsimParameters |    ✅    | Request Parameters Object |
+
+```java
+import lombok.NonNull;
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.esim.GetEsimOkResponse;
+import net.celitech.celitech.services.esim.GetEsimParameters;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    GetEsimParameters requestParameters = GetEsimParameters.builder().iccid("1111222233334444555").build();
+
+    GetEsimOkResponse response = celitech.eSimService.getEsim(requestParameters);
+
+    System.out.println(response);
+  }
+}
+
+```
+
+#### **getEsimDevice**
+
+Get device info from an installed eSIM
+
+- HTTP Method: `GET`
+- Endpoint: `/esim/{iccid}/device`
+
+**Parameters**
+
+| Name  | Type   | Required | Description    |
+| :---- | :----- | :------: | :------------- |
+| iccid | String |    ✅    | ID of the eSIM |
+
+```java
+import lombok.NonNull;
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.esim.GetEsimDeviceOkResponse;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    GetEsimDeviceOkResponse response = celitech.eSimService.getEsimDevice("1111222233334444555");
+
+    System.out.println(response);
+  }
+}
+
+```
+
+#### **getEsimHistory**
+
+Get history from an eSIM
+
+- HTTP Method: `GET`
+- Endpoint: `/esim/{iccid}/history`
+
+**Parameters**
+
+| Name  | Type   | Required | Description    |
+| :---- | :----- | :------: | :------------- |
+| iccid | String |    ✅    | ID of the eSIM |
+
+```java
+import lombok.NonNull;
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.esim.GetEsimHistoryOkResponse;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    GetEsimHistoryOkResponse response = celitech.eSimService.getEsimHistory("1111222233334444555");
+
+    System.out.println(response);
+  }
+}
+
+```
+
+#### **getEsimMac**
+
+Get MAC from eSIM
+
+- HTTP Method: `GET`
+- Endpoint: `/esim/{iccid}/mac`
+
+**Parameters**
+
+| Name  | Type   | Required | Description    |
+| :---- | :----- | :------: | :------------- |
+| iccid | String |    ✅    | ID of the eSIM |
+
+```java
+import lombok.NonNull;
+import net.celitech.celitech.Celitech;
+import net.celitech.celitech.services.esim.GetEsimMacOkResponse;
+
+class Main {
+
+  public static void main(String[] args) {
+    Celitech celitech = new Celitech(config);
+
+    GetEsimMacOkResponse response = celitech.eSimService.getEsimMac("1111222233334444555");
+
+    System.out.println(response);
+  }
+}
+
+```
