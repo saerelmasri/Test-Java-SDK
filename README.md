@@ -1,9 +1,9 @@
-# Celitech Java SDK 1.1.2
+# Celitech Java SDK 1.1.3
 
 A Java SDK for Celitech.
 
 - API version: 1.1.0
-- SDK version: 1.1.2
+- SDK version: 1.1.3
 
 Welcome to the CELITECH API documentation! Useful links: [Homepage](https://www.celitech.com) | [Support email](mailto:support@celitech.com) | [Blog](https://www.celitech.com/blog/)
 
@@ -18,16 +18,16 @@ If you use Maven, place the following within the _dependency_ tag in your pom.xm
 
 ```XML
 <dependency>
-  <groupId>net.celitech</groupId>
+  <groupId>io.github.saerelmasri</groupId>
   <artifactId>Celitech</artifactId>
-  <version>1.1.2</version>
+  <version>1.1.3</version>
 </dependency>
 ```
 
 If you use Gradle, paste the next line inside the _dependencies_ block of your build.gradle file:
 
 ```Gradle
-implementation group: net.celitech, name: Celitech, version: 1.1.2
+implementation group: io.github.saerelmasri, name: Celitech, version: 1.1.3
 ```
 
 ## Environments
@@ -43,7 +43,7 @@ SANDBOX("https://1bki1q3be6.execute-api.us-east-1.amazonaws.com/qa");
 Here is how you set an environment:
 
 ```java
-import net.celitech.celitech.http.Environment;
+import io.github.saerelmasri.celitech.http.Environment;
 
 public class Main {
 
@@ -89,8 +89,8 @@ Name of the destinations
 | :--- | :--- | :------: | :---------- |
 
 ```java
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.destinations.ListDestinationsOkResponse;
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.destinations.ListDestinationsOkResponse;
 
 class Main {
 
@@ -127,9 +127,9 @@ List of available packages
 | requestParameters | ListPackagesParameters |    ❌    | Request Parameters Object |
 
 ```java
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.packages.ListPackagesOkResponse;
-import net.celitech.celitech.services.packages.ListPackagesParameters;
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.packages.ListPackagesOkResponse;
+import io.github.saerelmasri.celitech.services.packages.ListPackagesParameters;
 
 class Main {
 
@@ -170,9 +170,9 @@ This endpoint can be used to list all the successful purchases made between a gi
 | requestParameters | ListPurchasesParameters |    ❌    | Request Parameters Object |
 
 ```java
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.purchases.ListPurchasesOkResponse;
-import net.celitech.celitech.services.purchases.ListPurchasesParameters;
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.purchases.ListPurchasesOkResponse;
+import io.github.saerelmasri.celitech.services.purchases.ListPurchasesParameters;
 
 class Main {
 
@@ -201,10 +201,10 @@ This endpoint is used to purchase a new eSIM by providing the package details.
 | createPurchaseRequest | CreatePurchaseRequest |    ✅    | Request Body |
 
 ```java
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.purchases.CreatePurchaseOkResponse;
+import io.github.saerelmasri.celitech.services.purchases.CreatePurchaseRequest;
 import lombok.NonNull;
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.purchases.CreatePurchaseOkResponse;
-import net.celitech.celitech.services.purchases.CreatePurchaseRequest;
 
 class Main {
 
@@ -241,10 +241,10 @@ This endpoint is used to top-up an eSIM with the previously associated destinati
 | topUpEsimRequest | TopUpEsimRequest |    ✅    | Request Body |
 
 ```java
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.purchases.TopUpEsimOkResponse;
+import io.github.saerelmasri.celitech.services.purchases.TopUpEsimRequest;
 import lombok.NonNull;
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.purchases.TopUpEsimOkResponse;
-import net.celitech.celitech.services.purchases.TopUpEsimRequest;
 
 class Main {
 
@@ -281,10 +281,10 @@ This endpoint allows you to modify the dates of an existing package with a futur
 | editPurchaseRequest | EditPurchaseRequest |    ✅    | Request Body |
 
 ```java
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.purchases.EditPurchaseOkResponse;
+import io.github.saerelmasri.celitech.services.purchases.EditPurchaseRequest;
 import lombok.NonNull;
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.purchases.EditPurchaseOkResponse;
-import net.celitech.celitech.services.purchases.EditPurchaseRequest;
 
 class Main {
 
@@ -320,9 +320,9 @@ This endpoint can be called for consumption notifications (e.g. every 1 hour or 
 | purchaseId | String |    ✅    | ID of the purchase |
 
 ```java
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.purchases.GetPurchaseConsumptionOkResponse;
 import lombok.NonNull;
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.purchases.GetPurchaseConsumptionOkResponse;
 
 class Main {
 
@@ -364,10 +364,10 @@ Get status from eSIM
 | requestParameters | GetEsimParameters |    ✅    | Request Parameters Object |
 
 ```java
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.esim.GetEsimOkResponse;
+import io.github.saerelmasri.celitech.services.esim.GetEsimParameters;
 import lombok.NonNull;
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.esim.GetEsimOkResponse;
-import net.celitech.celitech.services.esim.GetEsimParameters;
 
 class Main {
 
@@ -398,9 +398,9 @@ Get device info from an installed eSIM
 | iccid | String |    ✅    | ID of the eSIM |
 
 ```java
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.esim.GetEsimDeviceOkResponse;
 import lombok.NonNull;
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.esim.GetEsimDeviceOkResponse;
 
 class Main {
 
@@ -429,9 +429,9 @@ Get history from an eSIM
 | iccid | String |    ✅    | ID of the eSIM |
 
 ```java
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.esim.GetEsimHistoryOkResponse;
 import lombok.NonNull;
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.esim.GetEsimHistoryOkResponse;
 
 class Main {
 
@@ -460,9 +460,9 @@ Get MAC from eSIM
 | iccid | String |    ✅    | ID of the eSIM |
 
 ```java
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.services.esim.GetEsimMacOkResponse;
 import lombok.NonNull;
-import net.celitech.celitech.Celitech;
-import net.celitech.celitech.services.esim.GetEsimMacOkResponse;
 
 class Main {
 
