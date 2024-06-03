@@ -1,10 +1,8 @@
 package io.github.saerelmasri.celitech;
 
 import io.github.saerelmasri.celitech.config.CelitechConfig;
-import io.github.saerelmasri.celitech.hook.CustomHook;
 import io.github.saerelmasri.celitech.http.Environment;
 import io.github.saerelmasri.celitech.http.interceptors.DefaultHeadersInterceptor;
-import io.github.saerelmasri.celitech.http.interceptors.HookInterceptor;
 import io.github.saerelmasri.celitech.http.interceptors.RetryInterceptor;
 import io.github.saerelmasri.celitech.services.destinations.DestinationsService;
 import io.github.saerelmasri.celitech.services.esim.ESimService;
@@ -20,8 +18,6 @@ public class Celitech {
   public final PurchasesService purchasesService;
   public final ESimService eSimService;
 
-  private final HookInterceptor hookInterceptor;
-
   public Celitech() {
     // Default configs
     this(CelitechConfig.builder().build());
@@ -30,11 +26,8 @@ public class Celitech {
   public Celitech(CelitechConfig config) {
     final String serverUrl = config.getEnvironment().getUrl();
 
-    this.hookInterceptor = new HookInterceptor(new CustomHook());
-
     final OkHttpClient httpClient = new OkHttpClient.Builder()
       .addInterceptor(new DefaultHeadersInterceptor(config))
-      .addInterceptor(hookInterceptor)
       .addInterceptor(new RetryInterceptor(config.getRetryConfig()))
       .build();
 
