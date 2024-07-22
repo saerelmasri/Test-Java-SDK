@@ -34,14 +34,10 @@ public class CustomHook implements Hook {
 
     if (CURRENT_TOKEN.isEmpty() || CURRENT_EXPIRY.isBefore(Instant.now())) {
       try {
-        Map<String, String> input_data = Map.of(
-          "client_id",
-          clientId,
-          "client_secret",
-          clientSecret,
-          "grant_type",
-          "client_credentials"
-        );
+        Map<String, String> input_data = new HashMap<>();
+        input_data.put("client_id", clientId);
+        input_data.put("client_secret", clientSecret);
+        input_data.put("grant_type", "client_credentials");
 
         Map<String, Object> token_response = doPost(input_data);
         if (token_response == null) {
