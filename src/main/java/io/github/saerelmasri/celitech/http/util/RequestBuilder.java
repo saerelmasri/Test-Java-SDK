@@ -116,7 +116,10 @@ public class RequestBuilder {
    * @param content
    * @return
    */
-  public RequestBuilder setJsonContent(@NonNull Object content) {
+  public RequestBuilder setJsonContent(Object content) {
+    if (content == null) {
+      return this;
+    }
     this.body =
       RequestBody.create(
         Objects.requireNonNull(ModelConverter.modelToJson(content)),
@@ -134,6 +137,10 @@ public class RequestBuilder {
 
     for (Map.Entry<String, String> entry : headers.entrySet()) {
       requestBuilder.addHeader(entry.getKey(), entry.getValue());
+    }
+
+    if (httpMethod.requiresRequestBody() && this.body == null) {
+      this.body = RequestBody.create(new byte[0]);
     }
 
     requestBuilder.method(httpMethod.getMethod(), body);

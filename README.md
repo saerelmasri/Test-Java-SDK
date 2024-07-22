@@ -1,100 +1,86 @@
-# Celitech Java SDK 1.1.4
+# Celitech Java SDK 1.1.5
 
-A Java SDK for Celitech.
+Welcome to the Celitech SDK documentation. This guide will help you get started with integrating and using the Celitech SDK in your project.
 
-- API version: 1.1.0
-- SDK version: 1.1.4
+## Versions
+
+- API version: `1.1.0`
+- SDK version: `1.1.5`
+
+## About the API
 
 Welcome to the CELITECH API documentation! Useful links: [Homepage](https://www.celitech.com) | [Support email](mailto:support@celitech.com) | [Blog](https://www.celitech.com/blog/)
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Environments](#environments)
+- [Setup & Configuration](#setup--configuration)
+  - [Supported Language Versions](#supported-language-versions)
+  - [Installation](#installation)
+  - [Environment Variables](#environment-variables)
+- [Sample Usage](#sample-usage)
+- [Services](#services)
+- [Models](#models)
+- [License](#license)
+
+# Setup & Configuration
+
+## Supported Language Versions
+
+This SDK is compatible with the following versions: `Java >= 1.8`
 
 ## Installation
 
-If you use Maven, place the following within the _dependency_ tag in your pom.xml file:
+If you use Maven, place the following within the _dependency_ tag in your `pom.xml` file:
 
 ```XML
 <dependency>
-  <groupId>io.github.saerelmasri</groupId>
-  <artifactId>Celitech</artifactId>
-  <version>1.1.4</version>
+    <groupId>io.github.saerelmasri</groupId>
+    <artifactId>Celitech</artifactId>
+    <version>1.1.5</version>
 </dependency>
 ```
 
-If you use Gradle, paste the next line inside the _dependencies_ block of your build.gradle file:
+If you use Gradle, paste the next line inside the _dependencies_ block of your `build.gradle` file:
 
 ```Gradle
-implementation group: io.github.saerelmasri, name: Celitech, version: 1.1.4
+implementation group: io.github.saerelmasri, name: Celitech, version: 1.1.5
 ```
 
-## Environments
+If you use JAR files, package the SDK by running the following command:
 
-Here is the list of all available environment variables:
-
-```java
-DEFAULT("https://api.celitech.net/v1"),
-PRODUCTION("https://api.celitech.net/v1"),
-SANDBOX("https://1bki1q3be6.execute-api.us-east-1.amazonaws.com/qa");
+```shell
+mvn compile assembly:single
 ```
 
-Here is how you set an environment:
+Then, add the JAR file to your project's classpath.
+
+## Environment Variables
+
+These are the environment variables for the SDK:
+
+| Name          | Description             |
+| :------------ | :---------------------- |
+| CLIENT_ID     | Client ID parameter     |
+| CLIENT_SECRET | Client Secret parameter |
+
+Environment variables are a way to configure your application outside the code. You can set these environment variables on the command line or use your project's existing tooling for managing environment variables.
+
+If you are using a `.env` file, a template with the variable names is provided in the `.env.example` file located in the same directory as this README.
+
+# Sample Usage
+
+Below is a comprehensive example demonstrating how to authenticate and call a simple endpoint:
 
 ```java
-import io.github.saerelmasri.celitech.http.Environment;
+import io.github.saerelmasri.celitech.Celitech;
+import io.github.saerelmasri.celitech.config.CelitechConfig;
+import io.github.saerelmasri.celitech.models.ListDestinationsOkResponse;
 
 public class Main {
 
   public static void main(String[] args) {
-    CelitechConfig config = CelitechConfig.builder().build();
-    Celitech celitech = new Celitech(config);
+    CelitechConfig config = CelitechConfig.builder().clientId("client-id").clientSecret("client-secret").build();
 
-    celitech.setEnvironment(Environment.DEFAULT);
-  }
-}
-
-```
-
-## Services
-
-A list of all SDK services. Click on the service name to access its corresponding service methods.
-
-| Service                                     |
-| :------------------------------------------ |
-| [DestinationsService](#destinationsservice) |
-| [PackagesService](#packagesservice)         |
-| [PurchasesService](#purchasesservice)       |
-| [ESimService](#esimservice)                 |
-
-### DestinationsService
-
-A list of all methods in the `DestinationsService` service. Click on the method name to view detailed information about that method.
-
-| Methods                               | Description              |
-| :------------------------------------ | :----------------------- |
-| [listDestinations](#listdestinations) | Name of the destinations |
-
-#### **listDestinations**
-
-Name of the destinations
-
-- HTTP Method: `GET`
-- Endpoint: `/destinations`
-
-**Parameters**
-
-| Name | Type | Required | Description |
-| :--- | :--- | :------: | :---------- |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.destinations.ListDestinationsOkResponse;
-
-class Main {
-
-  public static void main(String[] args) {
     Celitech celitech = new Celitech(config);
 
     ListDestinationsOkResponse response = celitech.destinationsService.listDestinations();
@@ -105,374 +91,67 @@ class Main {
 
 ```
 
-### PackagesService
-
-A list of all methods in the `PackagesService` service. Click on the method name to view detailed information about that method.
-
-| Methods                       | Description                |
-| :---------------------------- | :------------------------- |
-| [listPackages](#listpackages) | List of available packages |
-
-#### **listPackages**
-
-List of available packages
-
-- HTTP Method: `GET`
-- Endpoint: `/packages`
-
-**Parameters**
-
-| Name              | Type                   | Required | Description               |
-| :---------------- | :--------------------- | :------: | :------------------------ |
-| requestParameters | ListPackagesParameters |    ❌    | Request Parameters Object |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.packages.ListPackagesOkResponse;
-import io.github.saerelmasri.celitech.services.packages.ListPackagesParameters;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    ListPackagesOkResponse response = celitech.packagesService.listPackages();
-
-    System.out.println(response);
-  }
-}
-
-```
-
-### PurchasesService
-
-A list of all methods in the `PurchasesService` service. Click on the method name to view detailed information about that method.
-
-| Methods                                           | Description                                                                                                                                                                                                                                                                                                            |
-| :------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [listPurchases](#listpurchases)                   | This endpoint can be used to list all the successful purchases made between a given interval.                                                                                                                                                                                                                          |
-| [createPurchase](#createpurchase)                 | This endpoint is used to purchase a new eSIM by providing the package details.                                                                                                                                                                                                                                         |
-| [topUpEsim](#topupesim)                           | This endpoint is used to top-up an eSIM with the previously associated destination by providing an existing ICCID and the package details. The top-up is not feasible for eSIMs in "DELETED" or "ERROR" state.                                                                                                         |
-| [editPurchase](#editpurchase)                     | This endpoint allows you to modify the dates of an existing package with a future activation start time. Editing can only be performed for packages that have not been activated, and it cannot change the package size. The modification must not change the package duration category to ensure pricing consistency. |
-| [getPurchaseConsumption](#getpurchaseconsumption) | This endpoint can be called for consumption notifications (e.g. every 1 hour or when the user clicks a button). It returns the data balance (consumption) of purchased packages.                                                                                                                                       |
-
-#### **listPurchases**
-
-This endpoint can be used to list all the successful purchases made between a given interval.
-
-- HTTP Method: `GET`
-- Endpoint: `/purchases`
-
-**Parameters**
-
-| Name              | Type                    | Required | Description               |
-| :---------------- | :---------------------- | :------: | :------------------------ |
-| requestParameters | ListPurchasesParameters |    ❌    | Request Parameters Object |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.purchases.ListPurchasesOkResponse;
-import io.github.saerelmasri.celitech.services.purchases.ListPurchasesParameters;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    ListPurchasesOkResponse response = celitech.purchasesService.listPurchases();
-
-    System.out.println(response);
-  }
-}
-
-```
-
-#### **createPurchase**
-
-This endpoint is used to purchase a new eSIM by providing the package details.
-
-- HTTP Method: `POST`
-- Endpoint: `/purchases`
-
-**Parameters**
-
-| Name                  | Type                  | Required | Description  |
-| :-------------------- | :-------------------- | :------: | :----------- |
-| createPurchaseRequest | CreatePurchaseRequest |    ✅    | Request Body |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.purchases.CreatePurchaseOkResponse;
-import io.github.saerelmasri.celitech.services.purchases.CreatePurchaseRequest;
-import lombok.NonNull;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    CreatePurchaseRequest createPurchaseRequest = CreatePurchaseRequest
-      .builder()
-      .destination("FRA")
-      .dataLimitInGb(1)
-      .startDate("2023-11-01")
-      .endDate("2023-11-20")
-      .build();
-
-    CreatePurchaseOkResponse response = celitech.purchasesService.createPurchase(createPurchaseRequest);
-
-    System.out.println(response);
-  }
-}
-
-```
-
-#### **topUpEsim**
-
-This endpoint is used to top-up an eSIM with the previously associated destination by providing an existing ICCID and the package details. The top-up is not feasible for eSIMs in "DELETED" or "ERROR" state.
-
-- HTTP Method: `POST`
-- Endpoint: `/purchases/topup`
-
-**Parameters**
-
-| Name             | Type             | Required | Description  |
-| :--------------- | :--------------- | :------: | :----------- |
-| topUpEsimRequest | TopUpEsimRequest |    ✅    | Request Body |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.purchases.TopUpEsimOkResponse;
-import io.github.saerelmasri.celitech.services.purchases.TopUpEsimRequest;
-import lombok.NonNull;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    TopUpEsimRequest topUpEsimRequest = TopUpEsimRequest
-      .builder()
-      .iccid("1111222233334444555")
-      .dataLimitInGb(1)
-      .startDate("2023-11-01")
-      .endDate("2023-11-20")
-      .build();
-
-    TopUpEsimOkResponse response = celitech.purchasesService.topUpEsim(topUpEsimRequest);
-
-    System.out.println(response);
-  }
-}
-
-```
-
-#### **editPurchase**
-
-This endpoint allows you to modify the dates of an existing package with a future activation start time. Editing can only be performed for packages that have not been activated, and it cannot change the package size. The modification must not change the package duration category to ensure pricing consistency.
-
-- HTTP Method: `POST`
-- Endpoint: `/purchases/edit`
-
-**Parameters**
-
-| Name                | Type                | Required | Description  |
-| :------------------ | :------------------ | :------: | :----------- |
-| editPurchaseRequest | EditPurchaseRequest |    ✅    | Request Body |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.purchases.EditPurchaseOkResponse;
-import io.github.saerelmasri.celitech.services.purchases.EditPurchaseRequest;
-import lombok.NonNull;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    EditPurchaseRequest editPurchaseRequest = EditPurchaseRequest
-      .builder()
-      .purchaseId("ae471106-c8b4-42cf-b83a-b061291f2922")
-      .startDate("2023-11-01")
-      .endDate("2023-11-20")
-      .build();
-
-    EditPurchaseOkResponse response = celitech.purchasesService.editPurchase(editPurchaseRequest);
-
-    System.out.println(response);
-  }
-}
-
-```
-
-#### **getPurchaseConsumption**
-
-This endpoint can be called for consumption notifications (e.g. every 1 hour or when the user clicks a button). It returns the data balance (consumption) of purchased packages.
-
-- HTTP Method: `GET`
-- Endpoint: `/purchases/{purchaseId}/consumption`
-
-**Parameters**
-
-| Name       | Type   | Required | Description        |
-| :--------- | :----- | :------: | :----------------- |
-| purchaseId | String |    ✅    | ID of the purchase |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.purchases.GetPurchaseConsumptionOkResponse;
-import lombok.NonNull;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    GetPurchaseConsumptionOkResponse response = celitech.purchasesService.getPurchaseConsumption(
-      "4973fa15-6979-4daa-9cf3-672620df819c"
-    );
-
-    System.out.println(response);
-  }
-}
-
-```
-
-### ESimService
-
-A list of all methods in the `ESimService` service. Click on the method name to view detailed information about that method.
-
-| Methods                           | Description                            |
-| :-------------------------------- | :------------------------------------- |
-| [getEsim](#getesim)               | Get status from eSIM                   |
-| [getEsimDevice](#getesimdevice)   | Get device info from an installed eSIM |
-| [getEsimHistory](#getesimhistory) | Get history from an eSIM               |
-| [getEsimMac](#getesimmac)         | Get MAC from eSIM                      |
-
-#### **getEsim**
-
-Get status from eSIM
-
-- HTTP Method: `GET`
-- Endpoint: `/esim`
-
-**Parameters**
-
-| Name              | Type              | Required | Description               |
-| :---------------- | :---------------- | :------: | :------------------------ |
-| requestParameters | GetEsimParameters |    ✅    | Request Parameters Object |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.esim.GetEsimOkResponse;
-import io.github.saerelmasri.celitech.services.esim.GetEsimParameters;
-import lombok.NonNull;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    GetEsimParameters requestParameters = GetEsimParameters.builder().iccid("1111222233334444555").build();
-
-    GetEsimOkResponse response = celitech.eSimService.getEsim(requestParameters);
-
-    System.out.println(response);
-  }
-}
-
-```
-
-#### **getEsimDevice**
-
-Get device info from an installed eSIM
-
-- HTTP Method: `GET`
-- Endpoint: `/esim/{iccid}/device`
-
-**Parameters**
-
-| Name  | Type   | Required | Description    |
-| :---- | :----- | :------: | :------------- |
-| iccid | String |    ✅    | ID of the eSIM |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.esim.GetEsimDeviceOkResponse;
-import lombok.NonNull;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    GetEsimDeviceOkResponse response = celitech.eSimService.getEsimDevice("1111222233334444555");
-
-    System.out.println(response);
-  }
-}
-
-```
-
-#### **getEsimHistory**
-
-Get history from an eSIM
-
-- HTTP Method: `GET`
-- Endpoint: `/esim/{iccid}/history`
-
-**Parameters**
-
-| Name  | Type   | Required | Description    |
-| :---- | :----- | :------: | :------------- |
-| iccid | String |    ✅    | ID of the eSIM |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.esim.GetEsimHistoryOkResponse;
-import lombok.NonNull;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    GetEsimHistoryOkResponse response = celitech.eSimService.getEsimHistory("1111222233334444555");
-
-    System.out.println(response);
-  }
-}
-
-```
-
-#### **getEsimMac**
-
-Get MAC from eSIM
-
-- HTTP Method: `GET`
-- Endpoint: `/esim/{iccid}/mac`
-
-**Parameters**
-
-| Name  | Type   | Required | Description    |
-| :---- | :----- | :------: | :------------- |
-| iccid | String |    ✅    | ID of the eSIM |
-
-```java
-import io.github.saerelmasri.celitech.Celitech;
-import io.github.saerelmasri.celitech.services.esim.GetEsimMacOkResponse;
-import lombok.NonNull;
-
-class Main {
-
-  public static void main(String[] args) {
-    Celitech celitech = new Celitech(config);
-
-    GetEsimMacOkResponse response = celitech.eSimService.getEsimMac("1111222233334444555");
-
-    System.out.println(response);
-  }
-}
-
-```
+## Services
+
+The SDK provides various services to interact with the API.
+
+<details> 
+<summary>Below is a list of all available services with links to their detailed documentation:</summary>
+
+| Name                                                                 |
+| :------------------------------------------------------------------- |
+| [DestinationsService](documentation/services/DestinationsService.md) |
+| [PackagesService](documentation/services/PackagesService.md)         |
+| [PurchasesService](documentation/services/PurchasesService.md)       |
+| [ESimService](documentation/services/ESimService.md)                 |
+
+</details>
+
+## Models
+
+The SDK includes several models that represent the data structures used in API requests and responses. These models help in organizing and managing the data efficiently.
+
+<details> 
+<summary>Below is a list of all available models with links to their detailed documentation:</summary>
+
+| Name                                                                                         | Description |
+| :------------------------------------------------------------------------------------------- | :---------- |
+| [ListDestinationsOkResponse](documentation/models/ListDestinationsOkResponse.md)             |             |
+| [ListPackagesOkResponse](documentation/models/ListPackagesOkResponse.md)                     |             |
+| [ListPurchasesOkResponse](documentation/models/ListPurchasesOkResponse.md)                   |             |
+| [CreatePurchaseRequest](documentation/models/CreatePurchaseRequest.md)                       |             |
+| [CreatePurchaseOkResponse](documentation/models/CreatePurchaseOkResponse.md)                 |             |
+| [TopUpEsimRequest](documentation/models/TopUpEsimRequest.md)                                 |             |
+| [TopUpEsimOkResponse](documentation/models/TopUpEsimOkResponse.md)                           |             |
+| [EditPurchaseRequest](documentation/models/EditPurchaseRequest.md)                           |             |
+| [EditPurchaseOkResponse](documentation/models/EditPurchaseOkResponse.md)                     |             |
+| [GetPurchaseConsumptionOkResponse](documentation/models/GetPurchaseConsumptionOkResponse.md) |             |
+| [GetEsimOkResponse](documentation/models/GetEsimOkResponse.md)                               |             |
+| [GetEsimDeviceOkResponse](documentation/models/GetEsimDeviceOkResponse.md)                   |             |
+| [GetEsimHistoryOkResponse](documentation/models/GetEsimHistoryOkResponse.md)                 |             |
+| [GetEsimMacOkResponse](documentation/models/GetEsimMacOkResponse.md)                         |             |
+| [Destinations](documentation/models/Destinations.md)                                         |             |
+| [Packages](documentation/models/Packages.md)                                                 |             |
+| [Purchases](documentation/models/Purchases.md)                                               |             |
+| [Package\_](documentation/models/Package_.md)                                                |             |
+| [PurchasesEsim](documentation/models/PurchasesEsim.md)                                       |             |
+| [CreatePurchaseOkResponsePurchase](documentation/models/CreatePurchaseOkResponsePurchase.md) |             |
+| [CreatePurchaseOkResponseProfile](documentation/models/CreatePurchaseOkResponseProfile.md)   |             |
+| [TopUpEsimOkResponsePurchase](documentation/models/TopUpEsimOkResponsePurchase.md)           |             |
+| [TopUpEsimOkResponseProfile](documentation/models/TopUpEsimOkResponseProfile.md)             |             |
+| [GetEsimOkResponseEsim](documentation/models/GetEsimOkResponseEsim.md)                       |             |
+| [Device](documentation/models/Device.md)                                                     |             |
+| [GetEsimHistoryOkResponseEsim](documentation/models/GetEsimHistoryOkResponseEsim.md)         |             |
+| [History](documentation/models/History.md)                                                   |             |
+| [GetEsimMacOkResponseEsim](documentation/models/GetEsimMacOkResponseEsim.md)                 |             |
+| [ListPackagesParameters](documentation/models/ListPackagesParameters.md)                     |             |
+| [ListPurchasesParameters](documentation/models/ListPurchasesParameters.md)                   |             |
+| [GetEsimParameters](documentation/models/GetEsimParameters.md)                               |             |
+
+</details>
+
+## License
+
+This SDK is licensed under the MIT License.
+
+See the [LICENSE](LICENSE) file for more details.
