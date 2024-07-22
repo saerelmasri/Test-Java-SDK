@@ -1,14 +1,14 @@
 {
   "liblabVersion": "2.1.21",
-  "date": "2024-07-22T12:48:25.731Z",
+  "date": "2024-07-22T14:20:20.021Z",
   "config": {
-    "apiId": 937,
+    "apiId": 938,
     "sdkName": "Celitech",
-    "sdkVersion": "1.1.5",
+    "sdkVersion": "1.1.6",
     "liblabVersion": "2",
     "deliveryMethods": ["zip"],
     "languages": ["java"],
-    "apiVersion": "1.1.5",
+    "apiVersion": "1.1.6",
     "specFilePath": "swagger.yaml",
     "languageOptions": {
       "java": {
@@ -25,7 +25,7 @@
         ],
         "githubRepoName": "Test-Java-SDK",
         "liblabVersion": "2",
-        "sdkVersion": "1.1.5"
+        "sdkVersion": "1.1.6"
       }
     },
     "publishing": {
@@ -65,10 +65,10 @@
     },
     "multiTenant": true,
     "hooksLocation": {
-      "bucketKey": "6304/hooks.zip",
+      "bucketKey": "6305/hooks.zip",
       "bucketName": "prod-liblab-api-stack-hooks"
     },
-    "specUrl": "https://prod-liblab-api-stack-specs.s3.us-east-1.amazonaws.com/937/open-api-spec.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA5P3QKKDKGVNIJ2H7%2F20240722%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240722T124820Z&X-Amz-Expires=43200&X-Amz-Signature=d8b9450b4c28891422432ff501039bcd58e40fedbf7022da64848dd674e09a67&X-Amz-SignedHeaders=host&x-id=GetObject",
+    "specUrl": "https://prod-liblab-api-stack-specs.s3.us-east-1.amazonaws.com/938/open-api-spec.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA5P3QKKDKGVNIJ2H7%2F20240722%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240722T142015Z&X-Amz-Expires=43200&X-Amz-Signature=51a707be5087b2bca6315a914e8410e2e60da8baadef52303d4ea9cb430ae986&X-Amz-SignedHeaders=host&x-id=GetObject",
     "includeWatermark": false,
     "groupId": "io.github.saerelmasri",
     "additionalConstructorParameters": [
