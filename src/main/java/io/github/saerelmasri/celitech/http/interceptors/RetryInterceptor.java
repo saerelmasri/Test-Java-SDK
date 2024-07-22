@@ -20,13 +20,16 @@ public class RetryInterceptor implements Interceptor {
 
     Response response = null;
     while (tryCount <= config.getMaxRetries()) {
-      tryCount++;
+      if (response != null) {
+        response.close();
+      }
+
       try {
         response = chain.proceed(request);
         if (!isRetryable(response)) {
           return response;
         }
-        response.close();
+        tryCount++;
       } catch (IOException e) {
         if (!config.getExceptionsToRetry().contains(e.getClass()) || tryCount == config.getMaxRetries()) {
           throw e;

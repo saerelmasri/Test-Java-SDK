@@ -20,6 +20,7 @@ public final class ModelConverter {
     mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+    mapper.enable(DeserializationFeature.USE_LONG_FOR_INTS);
   }
 
   private ModelConverter() {}

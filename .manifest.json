@@ -1,38 +1,45 @@
 {
-  "liblabVersion": "2.1.11",
-  "date": "2024-06-03T09:10:01.461Z",
+  "liblabVersion": "2.1.21",
+  "date": "2024-07-22T12:48:25.731Z",
   "config": {
-    "apiId": 821,
-    "baseUrl": "https://api.celitech.net/v1",
+    "apiId": 937,
     "sdkName": "Celitech",
-    "sdkVersion": "1.1.4",
+    "sdkVersion": "1.1.5",
     "liblabVersion": "2",
     "deliveryMethods": ["zip"],
     "languages": ["java"],
-    "apiVersion": "1.1.4",
+    "apiVersion": "1.1.5",
     "specFilePath": "swagger.yaml",
-    "createDocs": false,
     "languageOptions": {
       "java": {
         "groupId": "io.github.saerelmasri",
+        "additionalConstructorParameters": [
+          {
+            "name": "client_id",
+            "example": "client-id"
+          },
+          {
+            "name": "client_secret",
+            "example": "client-secret"
+          }
+        ],
         "githubRepoName": "Test-Java-SDK",
-        "homepage": "https://docs.celitech.com/",
         "liblabVersion": "2",
-        "sdkVersion": "1.1.4"
+        "sdkVersion": "1.1.5"
       }
     },
     "publishing": {
       "githubOrg": "saerelmasri"
     },
     "devContainer": true,
-    "environments": [
+    "environmentVariables": [
       {
-        "name": "production",
-        "url": "https://api.celitech.net/v1"
+        "description": "Client ID parameter",
+        "name": "CLIENT_ID"
       },
       {
-        "name": "sandbox",
-        "url": "https://1bki1q3be6.execute-api.us-east-1.amazonaws.com/qa"
+        "description": "Client Secret parameter",
+        "name": "CLIENT_SECRET"
       }
     ],
     "generateEnv": true,
@@ -57,20 +64,32 @@
       "httpMethodsToRetry": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
     },
     "multiTenant": true,
-    "specUrl": "https://prod-liblab-api-stack-specs.s3.us-east-1.amazonaws.com/821/open-api-spec.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA5P3QKKDKGVNIJ2H7%2F20240603%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240603T090956Z&X-Amz-Expires=43200&X-Amz-Signature=43aaee510c010f0338a207e039ca80438fd7fa46b03460cac318aad6d9a96e77&X-Amz-SignedHeaders=host&x-id=GetObject",
+    "hooksLocation": {
+      "bucketKey": "6304/hooks.zip",
+      "bucketName": "prod-liblab-api-stack-hooks"
+    },
+    "specUrl": "https://prod-liblab-api-stack-specs.s3.us-east-1.amazonaws.com/937/open-api-spec.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA5P3QKKDKGVNIJ2H7%2F20240722%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240722T124820Z&X-Amz-Expires=43200&X-Amz-Signature=d8b9450b4c28891422432ff501039bcd58e40fedbf7022da64848dd674e09a67&X-Amz-SignedHeaders=host&x-id=GetObject",
     "includeWatermark": false,
     "groupId": "io.github.saerelmasri",
+    "additionalConstructorParameters": [
+      {
+        "name": "client_id",
+        "example": "client-id"
+      },
+      {
+        "name": "client_secret",
+        "example": "client-secret"
+      }
+    ],
     "githubRepoName": "Test-Java-SDK",
-    "homepage": "https://docs.celitech.com/",
     "language": "java",
     "deliveryMethod": "zip",
     "hooks": {
-      "enabled": false,
-      "sourceDir": ""
+      "enabled": true,
+      "sourceDir": "/tmp/resources/hooks"
     },
     "usesFormData": false,
     "authentication": {},
-    "environmentVariables": [],
     "fileOutput": "/tmp",
     "httpLibrary": {
       "name": "axios",
@@ -88,6 +107,7 @@
   },
   "files": [
     "pom.xml",
+    ".gitignore",
     "src/main/java/io/github/saerelmasri/celitech/validation/annotation/Length.java",
     "src/main/java/io/github/saerelmasri/celitech/validation/annotation/Max.java",
     "src/main/java/io/github/saerelmasri/celitech/validation/annotation/Min.java",
@@ -101,33 +121,85 @@
     "src/main/java/io/github/saerelmasri/celitech/http/interceptors/DefaultHeadersInterceptor.java",
     "src/main/java/io/github/saerelmasri/celitech/hook/Hook.java",
     "src/main/java/io/github/saerelmasri/celitech/exceptions/ApiException.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/destinations/DestinationsService.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/packages/PackagesService.java",
+    "src/main/java/io/github/saerelmasri/celitech/services/DestinationsService.java",
+    "src/main/java/io/github/saerelmasri/celitech/services/PackagesService.java",
     "src/main/java/io/github/saerelmasri/celitech/http/Environment.java",
     "src/main/java/io/github/saerelmasri/celitech/Celitech.java",
+    "src/main/java/io/github/saerelmasri/celitech/hook/CustomHook.java",
     "./LICENSE",
     "src/main/java/io/github/saerelmasri/celitech/http/interceptors/RetryInterceptor.java",
     "src/main/java/io/github/saerelmasri/celitech/config/RetryConfig.java",
+    "src/main/java/io/github/saerelmasri/celitech/http/interceptors/HookInterceptor.java",
     "src/main/java/io/github/saerelmasri/celitech/config/CelitechConfig.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/CreatePurchaseRequest.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/TopUpEsimRequest.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/EditPurchaseRequest.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/EditPurchaseOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/GetPurchaseConsumptionOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/packages/ListPackagesParameters.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/ListPurchasesParameters.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/esim/GetEsimParameters.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/destinations/ListDestinationsOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/packages/ListPackagesOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/esim/GetEsimOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/esim/GetEsimDeviceOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/esim/GetEsimMacOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/esim/ESimService.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/PurchasesService.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/CreatePurchaseOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/TopUpEsimOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/esim/GetEsimHistoryOkResponse.java",
-    "src/main/java/io/github/saerelmasri/celitech/services/purchases/ListPurchasesOkResponse.java",
-    "README.md"
+    "documentation/models/ListDestinationsOkResponse.md",
+    "documentation/models/ListPackagesOkResponse.md",
+    "documentation/models/ListPurchasesOkResponse.md",
+    "documentation/models/CreatePurchaseRequest.md",
+    "documentation/models/CreatePurchaseOkResponse.md",
+    "documentation/models/TopUpEsimRequest.md",
+    "documentation/models/TopUpEsimOkResponse.md",
+    "documentation/models/EditPurchaseRequest.md",
+    "documentation/models/EditPurchaseOkResponse.md",
+    "documentation/models/GetPurchaseConsumptionOkResponse.md",
+    "documentation/models/GetEsimOkResponse.md",
+    "documentation/models/GetEsimDeviceOkResponse.md",
+    "documentation/models/GetEsimHistoryOkResponse.md",
+    "documentation/models/GetEsimMacOkResponse.md",
+    "documentation/models/Destinations.md",
+    "documentation/models/Packages.md",
+    "documentation/models/Purchases.md",
+    "documentation/models/Package_.md",
+    "documentation/models/PurchasesEsim.md",
+    "documentation/models/CreatePurchaseOkResponsePurchase.md",
+    "documentation/models/CreatePurchaseOkResponseProfile.md",
+    "documentation/models/TopUpEsimOkResponsePurchase.md",
+    "documentation/models/TopUpEsimOkResponseProfile.md",
+    "documentation/models/GetEsimOkResponseEsim.md",
+    "documentation/models/Device.md",
+    "documentation/models/GetEsimHistoryOkResponseEsim.md",
+    "documentation/models/History.md",
+    "documentation/models/GetEsimMacOkResponseEsim.md",
+    "documentation/models/ListPackagesParameters.md",
+    "documentation/models/ListPurchasesParameters.md",
+    "documentation/models/GetEsimParameters.md",
+    ".devcontainer/devcontainer.json",
+    "src/main/java/io/github/saerelmasri/celitech/models/ListDestinationsOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/GetEsimOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/GetEsimDeviceOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/GetEsimHistoryOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/GetEsimMacOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/PurchasesEsim.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/TopUpEsimOkResponseProfile.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/GetEsimParameters.java",
+    "documentation/services/DestinationsService.md",
+    "documentation/services/PackagesService.md",
+    "src/main/java/io/github/saerelmasri/celitech/models/ListPackagesOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/ListPurchasesOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/CreatePurchaseOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/TopUpEsimOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/GetPurchaseConsumptionOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/CreatePurchaseOkResponseProfile.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/GetEsimHistoryOkResponseEsim.java",
+    "src/main/java/io/github/saerelmasri/celitech/services/ESimService.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/Destinations.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/History.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/GetEsimMacOkResponseEsim.java",
+    "src/main/java/io/github/saerelmasri/celitech/services/PurchasesService.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/GetEsimOkResponseEsim.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/Device.java",
+    "documentation/services/ESimService.md",
+    "src/main/java/io/github/saerelmasri/celitech/models/EditPurchaseRequest.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/EditPurchaseOkResponse.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/Package_.java",
+    "documentation/services/PurchasesService.md",
+    "src/main/java/io/github/saerelmasri/celitech/models/Packages.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/CreatePurchaseOkResponsePurchase.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/TopUpEsimOkResponsePurchase.java",
+    "README.md",
+    "src/main/java/io/github/saerelmasri/celitech/models/TopUpEsimRequest.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/ListPackagesParameters.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/ListPurchasesParameters.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/CreatePurchaseRequest.java",
+    "src/main/java/io/github/saerelmasri/celitech/models/Purchases.java"
   ]
 }

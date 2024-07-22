@@ -17,4 +17,8 @@ public enum HttpMethod {
   CONNECT("CONNECT");
 
   private final String method;
+
+  public boolean requiresRequestBody() {
+    return method.equals("POST") || method.equals("PUT") || method.equals("PATCH");
+  }
 }

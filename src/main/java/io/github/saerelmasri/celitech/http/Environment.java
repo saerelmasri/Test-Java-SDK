@@ -9,9 +9,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Environment {
-  DEFAULT("https://api.celitech.net/v1"),
-  PRODUCTION("https://api.celitech.net/v1"),
-  SANDBOX("https://1bki1q3be6.execute-api.us-east-1.amazonaws.com/qa");
+  DEFAULT("https://api.celitech.net/v1");
 
   private final String url;
 }
